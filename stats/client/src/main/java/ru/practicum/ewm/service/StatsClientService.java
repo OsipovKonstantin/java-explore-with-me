@@ -45,4 +45,4 @@ public class StatsClientService extends BaseClient {
         );
         return get("/stats?start={start}&end={end}&uris={uris}&unique={unique}", null, parameters);
     }
-    }
+}

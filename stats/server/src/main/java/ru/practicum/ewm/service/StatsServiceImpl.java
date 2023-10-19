@@ -7,10 +7,7 @@ import ru.practicum.ewm.dto.ViewStats;
 import ru.practicum.ewm.mapper.StatsMapper;
 import ru.practicum.ewm.repository.StatsRepository;
 
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
