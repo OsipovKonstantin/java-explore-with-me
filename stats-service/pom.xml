@@ -8,14 +8,20 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>general-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>general-service</name>
-    <description>general-service</description>
+    <artifactId>stats-service</artifactId>
+    <name>stats-service</name>
+    <description>stats-service</description>
+    <packaging>pom</packaging>
 
     <properties>
         <java.version>11</java.version>
     </properties>
+
+    <modules>
+        <module>stats-dto</module>
+        <module>stats-server</module>
+        <module>stats-client</module>
+    </modules>
 
     <dependencies>
         <dependency>
@@ -55,11 +61,9 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
     </dependencies>
 
@@ -68,6 +72,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>ru.practicum.ewm.ServerApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
