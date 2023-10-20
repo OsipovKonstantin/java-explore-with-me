@@ -32,6 +32,7 @@ public class ParticipationRequest {
     private Event event;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "request_status")
     private RequestStatus status;
 
     private LocalDateTime created;

@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS users, compilations, locations, categories, request_statuses, event_states, events,
+DROP TABLE IF EXISTS users, compilations, locations, categories, events,
     events_compilations, participation_requests;
 
 CREATE TABLE IF NOT EXISTS users
@@ -26,12 +26,6 @@ CREATE TABLE IF NOT EXISTS categories
 (
     id BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
     name VARCHAR(50) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS requests_statuses
-(
-    id BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
-    request_status VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS events
@@ -64,6 +58,6 @@ CREATE TABLE IF NOT EXISTS participation_requests
     id BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
     user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     event_id BIGINT NOT NULL REFERENCES events(id) ON DELETE CASCADE,
-    request_status_id BIGINT NOT NULL REFERENCES requests_statuses(id) ON DELETE CASCADE,
+    request_status VARCHAR(20) NOT NULL,
     created TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
