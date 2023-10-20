@@ -1,14 +1,14 @@
-package ru.practicum.ewm.controller.admin;
+package ru.practicum.ewm.event.controller.priv;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.ewm.service.EventService;
+import ru.practicum.ewm.event.service.EventService;
 
 @RestController
-@RequestMapping("/admin/events")
+@RequestMapping("/users/{userId}/events")
 @RequiredArgsConstructor
-public class EventAdminController {
+public class EventPrivateController {
 
     private final EventService eventService;
 }
