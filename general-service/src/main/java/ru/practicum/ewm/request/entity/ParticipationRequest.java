@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 import ru.practicum.ewm.event.entity.Event;
 import ru.practicum.ewm.user.entity.User;
 
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@Accessors(chain = true)
 @EqualsAndHashCode(of = {"id"})
 public class ParticipationRequest {
     @Id

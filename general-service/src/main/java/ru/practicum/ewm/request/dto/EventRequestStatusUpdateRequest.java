@@ -4,13 +4,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import ru.practicum.ewm.request.entity.RequestStatus;
+import ru.practicum.ewm.validation.OnlyConfirmedOrRejected;
 
-import java.util.Set;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @Accessors(chain = true)
 public class EventRequestStatusUpdateRequest {
-    private Set<Long> requestIds;
+    private List<Long> requestIds;
+
+    @NotNull
+    @OnlyConfirmedOrRejected
     private RequestStatus status;
 }
+

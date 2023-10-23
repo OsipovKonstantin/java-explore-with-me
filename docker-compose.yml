@@ -1,19 +1,5 @@
 version: '3.1'
 services:
-  stats-client:
-    build: stats-service/stats-client
-    image: ewm-stats-client
-    container_name: ewm-stats-client
-    ports:
-      - "8090:8090"
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    depends_on:
-      - stats-server
-    environment:
-      - STATSSERVER_URL=http://stats-server:9090
-
   stats-server:
     build: stats-service/stats-server
     image: ewm-stats-server
@@ -57,7 +43,8 @@ services:
     depends_on:
       - ewm-db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://general-service-db:5432/generalservice
+      - STATS_SERVER_URL=http://stats-server:9090
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/generalservice
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
       - SPRING_DATASOURCE_USERNAME=admin
       - SPRING_DATASOURCE_PASSWORD=root

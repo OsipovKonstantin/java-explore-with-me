@@ -4,16 +4,18 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 import ru.practicum.ewm.event.entity.Event;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "compilations")
 @Getter
 @Setter
 @ToString
+@Accessors(chain = true)
 @EqualsAndHashCode(of = {"id"})
 public class Compilation {
     @Id
@@ -25,7 +27,7 @@ public class Compilation {
     @JoinTable(name = "events_compilations",
             joinColumns = {@JoinColumn(name = "compilation_id")},
             inverseJoinColumns = {@JoinColumn(name = "event_id")})
-    private Set<Event> events;
+    private List<Event> events;
 
     private Boolean pinned;
     private String title;

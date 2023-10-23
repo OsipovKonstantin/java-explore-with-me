@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import ru.practicum.ewm.validation.AtLeastThoHoursFromNowOn;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,7 @@ import static ru.practicum.ewm.constants.Constants.DATE_TIME_PATTERN;
 @Data
 @NoArgsConstructor
 @Accessors(chain = true)
+@AtLeastThoHoursFromNowOn
 public class NewEventDto {
     @NotBlank
     @Size(min = 20, max = 2000)
@@ -27,7 +29,6 @@ public class NewEventDto {
     @Size(min = 20, max = 7000)
     private String description;
 
-    @NotNull
     @JsonFormat(pattern = DATE_TIME_PATTERN)
     private LocalDateTime eventDate;
 

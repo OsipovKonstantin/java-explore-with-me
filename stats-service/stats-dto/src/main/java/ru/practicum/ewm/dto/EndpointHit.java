@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,6 +15,7 @@ import static ru.practicum.ewm.constants.Constants.DATE_TIME_PATTERN;
 
 @Data
 @NoArgsConstructor
+@Accessors(chain = true)
 @AllArgsConstructor
 public class EndpointHit {
     private Long id;
@@ -30,5 +32,5 @@ public class EndpointHit {
 
     @NotNull
     @JsonFormat(pattern = DATE_TIME_PATTERN)
-    private LocalDateTime timestamp;
+    private final LocalDateTime timestamp = LocalDateTime.now();
 }

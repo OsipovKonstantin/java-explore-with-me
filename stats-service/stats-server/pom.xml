@@ -9,10 +9,7 @@
     </parent>
 
     <artifactId>stats-server</artifactId>
-
-    <properties>
-        <java.version>11</java.version>
-    </properties>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
@@ -39,11 +36,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>ru.practicum.ewm.ServerApplication</mainClass>
-                </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>

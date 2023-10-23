@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import ru.practicum.ewm.event.entity.UserEventStateAction;
+import ru.practicum.ewm.validation.AtLeastThoHoursFromNowOn;
 
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import static ru.practicum.ewm.constants.Constants.DATE_TIME_PATTERN;
 @Data
 @NoArgsConstructor
 @Accessors(chain = true)
+@AtLeastThoHoursFromNowOn
 public class UpdateEventUserRequest {
     @Size(min = 20, max = 2000)
     private String annotation;

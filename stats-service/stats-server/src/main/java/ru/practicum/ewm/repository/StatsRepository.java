@@ -20,4 +20,6 @@ public interface StatsRepository extends JpaRepository<Hit, Long> {
             "order by hits desc")
     List<ViewStats> findByStartAndEndAndUrisAndIsUniqueIp(LocalDateTime start, LocalDateTime end,
                                                           List<String> uris, boolean unique);
+
+    Long countByUri(String uri);
 }

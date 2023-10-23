@@ -15,8 +15,8 @@ import static ru.practicum.ewm.constants.Constants.DATE_TIME_PATTERN_MILIS;
 @Accessors(chain = true)
 public class ParticipationRequestDto {
     private Long id;
-    private Long event;
     private Long requester;
+    private Long event;
     private RequestStatus status;
 
     @JsonFormat(pattern = DATE_TIME_PATTERN_MILIS)
