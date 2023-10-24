@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import ru.practicum.ewm.event.entity.AdminEventStateAction;
+import ru.practicum.ewm.location.dto.LocationDto;
 
 import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -32,6 +33,7 @@ public class UpdateEventAdminRequest {
 
     private Boolean paid;
 
+    @PositiveOrZero
     private Integer participantLimit;
 
     private Boolean requestModeration;

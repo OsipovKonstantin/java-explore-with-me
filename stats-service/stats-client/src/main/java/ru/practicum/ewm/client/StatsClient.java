@@ -37,6 +37,7 @@ public class StatsClient extends BaseClient {
         return post("/hit", endpointHit);
     }
 
+    @Transactional(readOnly = true)
     public List<ViewStats> findByStartAndEndAndUrisAndIsUniqueIp(LocalDateTime start,
                                                                  LocalDateTime end,
                                                                  List<String> uris,
@@ -51,6 +52,7 @@ public class StatsClient extends BaseClient {
                 null, parameters).getBody();
     }
 
+    @Transactional(readOnly = true)
     public Long countByEventId(Long id) {
         Integer number = (Integer) get("/stats/event-views/" + id).getBody();
         return number.longValue();

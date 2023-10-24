@@ -5,10 +5,11 @@ import ru.practicum.ewm.category.entity.Category;
 import ru.practicum.ewm.category.mapper.CategoryMapper;
 import ru.practicum.ewm.event.dto.EventFullDto;
 import ru.practicum.ewm.event.dto.EventShortDto;
+import ru.practicum.ewm.event.dto.EventState;
 import ru.practicum.ewm.event.dto.NewEventDto;
 import ru.practicum.ewm.event.entity.Event;
-import ru.practicum.ewm.event.entity.EventState;
-import ru.practicum.ewm.event.entity.Location;
+import ru.practicum.ewm.location.entity.Location;
+import ru.practicum.ewm.location.mapper.LocationMapper;
 import ru.practicum.ewm.user.entity.User;
 import ru.practicum.ewm.user.mapper.UserMapper;
 
@@ -60,6 +61,7 @@ public class EventMapper {
                 .setPaid(event.getPaid())
                 .setParticipantLimit(event.getParticipantLimit())
                 .setPublishedOn(event.getPublishedOn())
+                .setRequestModeration(event.getRequestModeration())
                 .setState(event.getState())
                 .setTitle(event.getTitle())
                 .setViews(views);

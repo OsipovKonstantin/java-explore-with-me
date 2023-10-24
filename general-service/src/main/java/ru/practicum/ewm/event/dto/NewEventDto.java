@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import ru.practicum.ewm.validation.AtLeastThoHoursFromNowOn;
+import ru.practicum.ewm.exception.validation.AtLeastThoHoursFromNowOn;
+import ru.practicum.ewm.location.dto.LocationDto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -36,7 +38,10 @@ public class NewEventDto {
     private LocationDto location;
 
     private Boolean paid = false;
-    private Integer participantLimit = 0;
+
+    @PositiveOrZero
+    private int participantLimit = 0;
+
     private Boolean requestModeration = true;
 
     @NotBlank

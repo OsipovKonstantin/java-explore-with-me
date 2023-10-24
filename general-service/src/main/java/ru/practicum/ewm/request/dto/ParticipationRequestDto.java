@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import ru.practicum.ewm.request.entity.RequestStatus;
 
 import java.time.LocalDateTime;
 

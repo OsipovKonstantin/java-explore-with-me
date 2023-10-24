@@ -3,8 +3,7 @@ package ru.practicum.ewm.request.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import ru.practicum.ewm.request.entity.RequestStatus;
-import ru.practicum.ewm.validation.OnlyConfirmedOrRejected;
+import ru.practicum.ewm.exception.validation.OnlyConfirmedOrRejected;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;

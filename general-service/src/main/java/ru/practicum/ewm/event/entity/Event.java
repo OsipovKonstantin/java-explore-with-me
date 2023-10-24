@@ -3,6 +3,8 @@ package ru.practicum.ewm.event.entity;
 import lombok.*;
 import lombok.experimental.Accessors;
 import ru.practicum.ewm.category.entity.Category;
+import ru.practicum.ewm.event.dto.EventState;
+import ru.practicum.ewm.location.entity.Location;
 import ru.practicum.ewm.user.entity.User;
 
 import javax.persistence.*;

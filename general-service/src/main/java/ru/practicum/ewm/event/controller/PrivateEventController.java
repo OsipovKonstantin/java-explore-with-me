@@ -4,17 +4,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.ewm.event.EventService;
 import ru.practicum.ewm.event.dto.EventFullDto;
 import ru.practicum.ewm.event.dto.EventShortDto;
 import ru.practicum.ewm.event.dto.NewEventDto;
 import ru.practicum.ewm.event.dto.UpdateEventUserRequest;
-import ru.practicum.ewm.event.service.EventService;
 import ru.practicum.ewm.request.dto.EventRequestStatusUpdateRequest;
 import ru.practicum.ewm.request.dto.EventRequestStatusUpdateResult;
 import ru.practicum.ewm.request.dto.ParticipationRequestDto;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
+
+import static ru.practicum.ewm.constants.Constants.MIN_PAGE_FROM;
+import static ru.practicum.ewm.constants.Constants.MIN_PAGE_SIZE;
 
 @Validated
 @RestController
@@ -26,8 +30,9 @@ public class PrivateEventController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<EventShortDto> findByInitiatorId(@PathVariable Long userId,
-                                                 @RequestParam(defaultValue = "0") Integer from,
-                                                 @RequestParam(defaultValue = "10") Integer size) {
+                                                 @Min(MIN_PAGE_FROM) @RequestParam(defaultValue = "0") Integer from,
+                                                 @Min(MIN_PAGE_SIZE) @RequestParam(defaultValue = "10")
+                                                 Integer size) {
         return eventService.findByInitiatorId(userId, from, size);
     }
 

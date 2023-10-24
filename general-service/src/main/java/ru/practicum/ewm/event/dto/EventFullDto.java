@@ -5,11 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import ru.practicum.ewm.category.dto.CategoryDto;
-import ru.practicum.ewm.event.entity.EventState;
+import ru.practicum.ewm.location.dto.LocationDto;
 import ru.practicum.ewm.user.dto.UserShortDto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 
 import static ru.practicum.ewm.constants.Constants.DATE_TIME_PATTERN;
@@ -46,12 +47,13 @@ public class EventFullDto {
     @NotNull
     private Boolean paid;
 
+    @PositiveOrZero
     private Integer participantLimit = 0;
 
     @JsonFormat(pattern = DATE_TIME_PATTERN)
     private LocalDateTime publishedOn;
 
-    private Boolean requestModeration = true;
+    private Boolean requestModeration;
     private EventState state;
 
     @NotBlank

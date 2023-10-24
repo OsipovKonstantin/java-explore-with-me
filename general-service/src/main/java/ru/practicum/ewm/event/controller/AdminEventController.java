@@ -5,16 +5,18 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.ewm.event.EventService;
 import ru.practicum.ewm.event.dto.EventFullDto;
+import ru.practicum.ewm.event.dto.EventState;
+import ru.practicum.ewm.event.dto.FindAdminByFiltersParams;
 import ru.practicum.ewm.event.dto.UpdateEventAdminRequest;
-import ru.practicum.ewm.event.entity.EventState;
-import ru.practicum.ewm.event.service.EventService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static ru.practicum.ewm.constants.Constants.DATE_TIME_PATTERN;
+import static ru.practicum.ewm.constants.Constants.*;
 
 @Validated
 @RestController
@@ -29,11 +31,15 @@ public class AdminEventController {
     public List<EventFullDto> findAdminByFilters(@RequestParam(required = false) List<Long> users,
                                                  @RequestParam(required = false) List<EventState> states,
                                                  @RequestParam(required = false) List<Long> categories,
-                                                 @RequestParam(required = false) @DateTimeFormat(pattern = DATE_TIME_PATTERN) LocalDateTime rangeStart,
-                                                 @RequestParam(required = false) @DateTimeFormat(pattern = DATE_TIME_PATTERN) LocalDateTime rangeEnd,
-                                                 @RequestParam(defaultValue = "0") Integer from,
-                                                 @RequestParam(defaultValue = "10") Integer size) {
-        return eventService.findAdminByFilters(users, states, categories, rangeStart, rangeEnd, from, size);
+                                                 @DateTimeFormat(pattern = DATE_TIME_PATTERN) @RequestParam(required = false)
+                                                 LocalDateTime rangeStart,
+                                                 @DateTimeFormat(pattern = DATE_TIME_PATTERN) @RequestParam(required = false)
+                                                 LocalDateTime rangeEnd,
+                                                 @Min(MIN_PAGE_FROM) @RequestParam(defaultValue = "0") Integer from,
+                                                 @Min(MIN_PAGE_SIZE) @RequestParam(defaultValue = "10")
+                                                 Integer size) {
+        return eventService.findAdminByFilters(
+                new FindAdminByFiltersParams(users, states, categories, rangeStart, rangeEnd, from, size));
     }
 
     @PatchMapping("/{eventId}")

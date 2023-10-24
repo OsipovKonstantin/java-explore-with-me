@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import ru.practicum.ewm.event.entity.Event;
+import ru.practicum.ewm.request.dto.RequestStatus;
 import ru.practicum.ewm.user.entity.User;
 
 import javax.persistence.*;
