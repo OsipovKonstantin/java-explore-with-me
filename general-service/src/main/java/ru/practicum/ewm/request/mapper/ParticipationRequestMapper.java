@@ -1,12 +1,12 @@
 package ru.practicum.ewm.request.mapper;
 
-import lombok.experimental.UtilityClass;
+import org.springframework.stereotype.Component;
 import ru.practicum.ewm.request.dto.ParticipationRequestDto;
 import ru.practicum.ewm.request.entity.ParticipationRequest;
 
-@UtilityClass
+@Component
 public class ParticipationRequestMapper {
-    public static ParticipationRequestDto toParticipationRequestDto(ParticipationRequest participationRequest) {
+    public ParticipationRequestDto toParticipationRequestDto(ParticipationRequest participationRequest) {
         return new ParticipationRequestDto()
                 .setId(participationRequest.getId())
                 .setRequester(participationRequest.getRequester().getId())

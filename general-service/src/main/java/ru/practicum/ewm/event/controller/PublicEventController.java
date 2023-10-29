@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.event.EventService;
 import ru.practicum.ewm.event.dto.EventFullDto;
 import ru.practicum.ewm.event.dto.EventShortDto;
+import ru.practicum.ewm.event.dto.FindByPublicFiltersParams;
 import ru.practicum.ewm.event.dto.SortType;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +29,7 @@ public class PublicEventController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<EventShortDto> findPublicByFilters(@RequestParam(required = false) String text,
+    public List<EventShortDto> findByPublicFilters(@RequestParam(required = false) String text,
                                                    @RequestParam(required = false) Set<Long> categories,
                                                    @RequestParam(required = false) Boolean paid,
                                                    @RequestParam(required = false)
@@ -41,8 +42,8 @@ public class PublicEventController {
                                                    @Min(MIN_PAGE_SIZE) @RequestParam(defaultValue = "10")
                                                    Integer size,
                                                    HttpServletRequest request) {
-        return eventService.findPublicByFilters(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from,
-                size, request);
+        return eventService.findByPublicFilters(new FindByPublicFiltersParams(text, categories, paid, rangeStart,
+                rangeEnd, onlyAvailable, sort, from, size, request));
     }
 
     @GetMapping("/{id}")

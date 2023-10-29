@@ -23,10 +23,11 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl implements CategoryService {
     private final AdminCategoryRepository categoryRepository;
     private final EventRepository eventRepository;
+    private final CategoryMapper categoryMapper;
 
     @Override
     public CategoryDto save(NewCategoryDto newCategoryDto) {
-        return CategoryMapper.toCategoryDto(categoryRepository.save(CategoryMapper.toCategory(newCategoryDto)));
+        return categoryMapper.toCategoryDto(categoryRepository.save(categoryMapper.toCategory(newCategoryDto)));
     }
 
     @Override
@@ -40,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto update(Long id, CategoryDto categoryDto) {
         checkExists(id);
-        return CategoryMapper.toCategoryDto(categoryRepository.save(new Category().setId(id).setName(categoryDto.getName())));
+        return categoryMapper.toCategoryDto(categoryRepository.save(categoryMapper.toCategory(id, categoryDto)));
     }
 
     @Transactional(readOnly = true)
@@ -54,13 +55,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryDto> findAll(Integer from, Integer size) {
         Pageable page = new OffsetBasedPageRequest(from, size);
-        return categoryRepository.findAll(page).stream().map(CategoryMapper::toCategoryDto).collect(Collectors.toList());
+        return categoryRepository.findAll(page).stream().map(categoryMapper::toCategoryDto).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     @Override
     public CategoryDto findDtoById(Long id) {
-        return CategoryMapper.toCategoryDto(findById(id));
+        return categoryMapper.toCategoryDto(findById(id));
     }
 
     private void checkExists(Long id) {

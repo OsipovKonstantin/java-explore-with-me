@@ -22,7 +22,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             "and (nullif((:categories), null) is null or e.category.id in (:categories)) " +
             "and (nullif((:rangeStart), null) is null or e.eventDate >= :rangeStart) " +
             "and (nullif((:rangeEnd), null) is null or e.eventDate <= :rangeEnd)")
-    Page<Event> findAdminByFilters(List<Long> users, List<EventState> states, List<Long> categories,
+    Page<Event> findByAdminFilters(List<Long> users, List<EventState> states, List<Long> categories,
                                    LocalDateTime rangeStart, LocalDateTime rangeEnd, Pageable page);
 
     @Query("select e " +
@@ -39,7 +39,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             "from ParticipationRequest r " +
             "where r.event.id = e.id " +
             "and r.status = 'CONFIRMED'))")
-    List<Event> findPublicByFilters(String text, Set<Long> categories, Boolean paid,
+    List<Event> findByPublicFilters(String text, Set<Long> categories, Boolean paid,
                                     LocalDateTime rangeStart, LocalDateTime rangeEnd, Boolean onlyAvailable);
 
     Optional<Event> findByIdAndState(Long eventId, EventState state);

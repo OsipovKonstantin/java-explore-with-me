@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.event.EventService;
 import ru.practicum.ewm.event.dto.EventFullDto;
 import ru.practicum.ewm.event.dto.EventState;
-import ru.practicum.ewm.event.dto.FindAdminByFiltersParams;
+import ru.practicum.ewm.event.dto.FindByAdminFiltersParams;
 import ru.practicum.ewm.event.dto.UpdateEventAdminRequest;
 
 import javax.validation.Valid;
@@ -28,7 +28,7 @@ public class AdminEventController {
 
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
-    public List<EventFullDto> findAdminByFilters(@RequestParam(required = false) List<Long> users,
+    public List<EventFullDto> findByAdminFilters(@RequestParam(required = false) List<Long> users,
                                                  @RequestParam(required = false) List<EventState> states,
                                                  @RequestParam(required = false) List<Long> categories,
                                                  @DateTimeFormat(pattern = DATE_TIME_PATTERN) @RequestParam(required = false)
@@ -38,8 +38,8 @@ public class AdminEventController {
                                                  @Min(MIN_PAGE_FROM) @RequestParam(defaultValue = "0") Integer from,
                                                  @Min(MIN_PAGE_SIZE) @RequestParam(defaultValue = "10")
                                                  Integer size) {
-        return eventService.findAdminByFilters(
-                new FindAdminByFiltersParams(users, states, categories, rangeStart, rangeEnd, from, size));
+        return eventService.findByAdminFilters(
+                new FindByAdminFiltersParams(users, states, categories, rangeStart, rangeEnd, from, size));
     }
 
     @PatchMapping("/{eventId}")
