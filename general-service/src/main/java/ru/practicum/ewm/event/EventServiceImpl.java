@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.category.CategoryService;
-import ru.practicum.ewm.category.entity.Category;
 import ru.practicum.ewm.client.StatsClient;
 import ru.practicum.ewm.customclasses.OffsetBasedPageRequest;
 import ru.practicum.ewm.dto.EndpointHit;
@@ -17,7 +16,6 @@ import ru.practicum.ewm.exception.ConflictException;
 import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.exception.ValidationException;
 import ru.practicum.ewm.location.LocationService;
-import ru.practicum.ewm.location.entity.Location;
 import ru.practicum.ewm.location.mapper.LocationMapper;
 import ru.practicum.ewm.request.ParticipationRequestService;
 import ru.practicum.ewm.request.dto.EventRequestStatusUpdateRequest;
@@ -26,8 +24,7 @@ import ru.practicum.ewm.request.dto.ParticipationRequestDto;
 import ru.practicum.ewm.request.dto.RequestStatus;
 import ru.practicum.ewm.request.entity.ParticipationRequest;
 import ru.practicum.ewm.request.mapper.ParticipationRequestMapper;
-import ru.practicum.ewm.user.entity.User;
-import ru.practicum.ewm.user.service.UserService;
+import ru.practicum.ewm.user.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -44,6 +41,9 @@ public class EventServiceImpl implements EventService {
     private final UserService userService;
     private final CategoryService categoryService;
     private final LocationService locationService;
+    private final EventMapper eventMapper;
+    private final LocationMapper locationMapper;
+    private final ParticipationRequestMapper participationRequestMapper;
 
     @Transactional(readOnly = true)
     @Override
@@ -51,22 +51,13 @@ public class EventServiceImpl implements EventService {
         Pageable page = new OffsetBasedPageRequest(from, size);
         userService.checkExists(userId);
 
-        return eventRepository.findByInitiatorId(userId, page).stream().map(e ->
-                        EventMapper.toEventShortDto(e,
-                                requestService.countByEventIdAndStatus(e.getId(), RequestStatus.CONFIRMED),
-                                statsClient.countByEventId(e.getId())))
+        return eventRepository.findByInitiatorId(userId, page).stream().map(eventMapper::toEventShortDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public EventFullDto save(Long userId, NewEventDto newEventDto) {
-        User initiator = userService.findById(userId);
-        Category category = categoryService.findById(newEventDto.getCategory());
-        Location location = locationService.save(newEventDto.getLocation());
-
-        return EventMapper.toEventFullDto(eventRepository.save(EventMapper.toEvent(newEventDto, initiator, category,
-                        location)),
-                0L, 0L);
+        return eventMapper.toEventFullDto(eventRepository.save(eventMapper.toEvent(newEventDto, userId)));
     }
 
     @Transactional(readOnly = true)
@@ -74,12 +65,12 @@ public class EventServiceImpl implements EventService {
     public EventFullDto findByIdAndInitiatorId(Long userId, Long eventId) {
         Event event = checkEventWithInitiatorExists(eventId, userId);
 
-        return EventMapper.toEventFullDto(event,
-                requestService.countByEventIdAndStatus(event.getId(), RequestStatus.CONFIRMED),
-                statsClient.countByEventId(event.getId()));
+        return eventMapper.toEventFullDto(event);
     }
 
-    private Event findById(Long eventId) {
+    @Transactional(readOnly = true)
+    @Override
+    public Event findById(Long eventId) {
         checkExists(eventId);
         return eventRepository.findById(eventId).get();
     }
@@ -103,37 +94,35 @@ public class EventServiceImpl implements EventService {
         else
             newState = EventState.CANCELED;
 
-        return EventMapper.toEventFullDto(eventRepository.save(event
-                        .setAnnotation(updateEventUserRequest.getAnnotation() == null
-                                ? event.getAnnotation()
-                                : updateEventUserRequest.getAnnotation())
-                        .setCategory(updateEventUserRequest.getCategory() == null
-                                ? event.getCategory()
-                                : categoryService.findById(updateEventUserRequest.getCategory()))
-                        .setDescription(updateEventUserRequest.getDescription() == null
-                                ? event.getDescription()
-                                : updateEventUserRequest.getDescription())
-                        .setEventDate(updateEventUserRequest.getEventDate() == null
-                                ? event.getEventDate()
-                                : updateEventUserRequest.getEventDate())
-                        .setLocation(updateEventUserRequest.getLocation() == null
-                                ? event.getLocation()
-                                : LocationMapper.toLocation(updateEventUserRequest.getLocation()))
-                        .setPaid(updateEventUserRequest.getPaid() == null
-                                ? event.getPaid()
-                                : updateEventUserRequest.getPaid())
-                        .setParticipantLimit(updateEventUserRequest.getParticipantLimit() == null
-                                ? event.getParticipantLimit()
-                                : updateEventUserRequest.getParticipantLimit())
-                        .setRequestModeration(updateEventUserRequest.getRequestModeration() == null
-                                ? event.getRequestModeration()
-                                : updateEventUserRequest.getRequestModeration())
-                        .setState(newState)
-                        .setTitle(updateEventUserRequest.getTitle() == null
-                                ? event.getTitle()
-                                : updateEventUserRequest.getTitle())),
-                requestService.countByEventIdAndStatus(event.getId(), RequestStatus.CONFIRMED),
-                statsClient.countByEventId(event.getId()));
+        return eventMapper.toEventFullDto(eventRepository.save(event
+                .setAnnotation(updateEventUserRequest.getAnnotation() == null
+                        ? event.getAnnotation()
+                        : updateEventUserRequest.getAnnotation())
+                .setCategory(updateEventUserRequest.getCategory() == null
+                        ? event.getCategory()
+                        : categoryService.findById(updateEventUserRequest.getCategory()))
+                .setDescription(updateEventUserRequest.getDescription() == null
+                        ? event.getDescription()
+                        : updateEventUserRequest.getDescription())
+                .setEventDate(updateEventUserRequest.getEventDate() == null
+                        ? event.getEventDate()
+                        : updateEventUserRequest.getEventDate())
+                .setLocation(updateEventUserRequest.getLocation() == null
+                        ? event.getLocation()
+                        : locationMapper.toLocation(updateEventUserRequest.getLocation()))
+                .setPaid(updateEventUserRequest.getPaid() == null
+                        ? event.getPaid()
+                        : updateEventUserRequest.getPaid())
+                .setParticipantLimit(updateEventUserRequest.getParticipantLimit() == null
+                        ? event.getParticipantLimit()
+                        : updateEventUserRequest.getParticipantLimit())
+                .setRequestModeration(updateEventUserRequest.getRequestModeration() == null
+                        ? event.getRequestModeration()
+                        : updateEventUserRequest.getRequestModeration())
+                .setState(newState)
+                .setTitle(updateEventUserRequest.getTitle() == null
+                        ? event.getTitle()
+                        : updateEventUserRequest.getTitle())));
     }
 
     @Transactional(readOnly = true)
@@ -167,7 +156,7 @@ public class EventServiceImpl implements EventService {
             return new EventRequestStatusUpdateResult()
                     .setConfirmedRequests(List.of())
                     .setRejectedRequests(newRejectedRequests.stream()
-                            .map(ParticipationRequestMapper::toParticipationRequestDto).collect(Collectors.toList()));
+                            .map(participationRequestMapper::toParticipationRequestDto).collect(Collectors.toList()));
         }
 
         Long confirmedRequests = requestService.countByEventIdAndStatus(eventId, RequestStatus.CONFIRMED);
@@ -190,9 +179,9 @@ public class EventServiceImpl implements EventService {
         }
         return new EventRequestStatusUpdateResult()
                 .setConfirmedRequests(newConfirmedRequests.stream()
-                        .map(ParticipationRequestMapper::toParticipationRequestDto).collect(Collectors.toList()))
+                        .map(participationRequestMapper::toParticipationRequestDto).collect(Collectors.toList()))
                 .setRejectedRequests(newRejectedRequests.stream()
-                        .map(ParticipationRequestMapper::toParticipationRequestDto).collect(Collectors.toList()));
+                        .map(participationRequestMapper::toParticipationRequestDto).collect(Collectors.toList()));
     }
 
     @Override
@@ -213,57 +202,59 @@ public class EventServiceImpl implements EventService {
         else
             newEventState = EventState.CANCELED;
 
-        return EventMapper.toEventFullDto(eventRepository.save(event
-                        .setAnnotation(updateEventAdminRequest.getAnnotation() == null
-                                ? event.getAnnotation()
-                                : updateEventAdminRequest.getAnnotation())
-                        .setCategory(updateEventAdminRequest.getCategory() == null
-                                ? event.getCategory()
-                                : categoryService.findById(updateEventAdminRequest.getCategory()))
-                        .setDescription(updateEventAdminRequest.getDescription() == null
-                                ? event.getDescription()
-                                : updateEventAdminRequest.getDescription())
-                        .setEventDate(updateEventAdminRequest.getEventDate() == null
-                                ? event.getEventDate()
-                                : updateEventAdminRequest.getEventDate())
-                        .setLocation(updateEventAdminRequest.getLocation() == null
-                                ? event.getLocation()
-                                : locationService.save(updateEventAdminRequest.getLocation()))
-                        .setPaid(updateEventAdminRequest.getPaid() == null
-                                ? event.getPaid()
-                                : updateEventAdminRequest.getPaid())
-                        .setParticipantLimit(updateEventAdminRequest.getParticipantLimit() == null
-                                ? event.getParticipantLimit()
-                                : updateEventAdminRequest.getParticipantLimit())
-                        .setRequestModeration(updateEventAdminRequest.getRequestModeration() == null
-                                ? event.getRequestModeration()
-                                : updateEventAdminRequest.getRequestModeration())
-                        .setState(newEventState)
-                        .setTitle(updateEventAdminRequest.getTitle() == null
-                                ? event.getTitle()
-                                : updateEventAdminRequest.getTitle())),
-                requestService.countByEventIdAndStatus(event.getId(), RequestStatus.CONFIRMED),
-                statsClient.countByEventId(event.getId()));
+        return eventMapper.toEventFullDto(eventRepository.save(event
+                .setAnnotation(updateEventAdminRequest.getAnnotation() == null
+                        ? event.getAnnotation()
+                        : updateEventAdminRequest.getAnnotation())
+                .setCategory(updateEventAdminRequest.getCategory() == null
+                        ? event.getCategory()
+                        : categoryService.findById(updateEventAdminRequest.getCategory()))
+                .setDescription(updateEventAdminRequest.getDescription() == null
+                        ? event.getDescription()
+                        : updateEventAdminRequest.getDescription())
+                .setEventDate(updateEventAdminRequest.getEventDate() == null
+                        ? event.getEventDate()
+                        : updateEventAdminRequest.getEventDate())
+                .setLocation(updateEventAdminRequest.getLocation() == null
+                        ? event.getLocation()
+                        : locationService.save(updateEventAdminRequest.getLocation()))
+                .setPaid(updateEventAdminRequest.getPaid() == null
+                        ? event.getPaid()
+                        : updateEventAdminRequest.getPaid())
+                .setParticipantLimit(updateEventAdminRequest.getParticipantLimit() == null
+                        ? event.getParticipantLimit()
+                        : updateEventAdminRequest.getParticipantLimit())
+                .setRequestModeration(updateEventAdminRequest.getRequestModeration() == null
+                        ? event.getRequestModeration()
+                        : updateEventAdminRequest.getRequestModeration())
+                .setState(newEventState)
+                .setTitle(updateEventAdminRequest.getTitle() == null
+                        ? event.getTitle()
+                        : updateEventAdminRequest.getTitle())));
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<EventFullDto> findAdminByFilters(FindAdminByFiltersParams params) {
-
+    public List<EventFullDto> findByAdminFilters(FindByAdminFiltersParams params) {
         Pageable page = new OffsetBasedPageRequest(params.getFrom(), params.getSize());
-        return eventRepository.findAdminByFilters(params.getUsers(), params.getStates(), params.getCategories(),
+        return eventRepository.findByAdminFilters(params.getUsers(), params.getStates(), params.getCategories(),
                         params.getRangeStart(), params.getRangeEnd(), page).stream()
-                .map(e -> EventMapper.toEventFullDto(e,
-                        requestService.countByEventIdAndStatus(e.getId(), RequestStatus.CONFIRMED),
-                        statsClient.countByEventId(e.getId()))).collect(Collectors.toList());
+                .map(eventMapper::toEventFullDto).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<EventShortDto> findPublicByFilters(String text, Set<Long> categories, Boolean paid,
-                                                   LocalDateTime rangeStart, LocalDateTime rangeEnd,
-                                                   Boolean onlyAvailable, SortType sort, Integer from, Integer size,
-                                                   HttpServletRequest request) {
+    public List<EventShortDto> findByPublicFilters(FindByPublicFiltersParams params) {
+        LocalDateTime rangeStart = params.getRangeStart();
+        LocalDateTime rangeEnd = params.getRangeEnd();
+        HttpServletRequest request = params.getRequest();
+        String text = params.getText();
+        Set<Long> categories = params.getCategories();
+        Boolean paid = params.getPaid();
+        Boolean onlyAvailable = params.getOnlyAvailable();
+        SortType sort = params.getSort();
+        Integer from = params.getFrom();
+        Integer size = params.getSize();
 
         if (rangeStart != null && rangeEnd != null && rangeEnd.isBefore(rangeStart))
             throw new ValidationException("Время конца поискового диапазона не может быть раньше времени начала.");
@@ -271,11 +262,9 @@ public class EventServiceImpl implements EventService {
             rangeStart = LocalDateTime.now();
         statsClient.save(new EndpointHit().setApp("ewm-main-service").setUri(request.getRequestURI())
                 .setIp(request.getRemoteAddr()));
-        List<EventShortDto> dtos = eventRepository.findPublicByFilters(text, categories, paid, rangeStart, rangeEnd,
+        List<EventShortDto> dtos = eventRepository.findByPublicFilters(text, categories, paid, rangeStart, rangeEnd,
                         onlyAvailable)
-                .stream().map(e -> EventMapper.toEventShortDto(e,
-                        requestService.countByEventIdAndStatus(e.getId(), RequestStatus.CONFIRMED),
-                        statsClient.countByEventId(e.getId()))).collect(Collectors.toList());
+                .stream().map(eventMapper::toEventShortDto).collect(Collectors.toList());
 
         if (sort == null)
             return dtos.subList(from, Math.min(from + size, dtos.size()));
@@ -290,12 +279,11 @@ public class EventServiceImpl implements EventService {
     public EventFullDto findDtoById(Long eventId, HttpServletRequest request) {
         statsClient.save(new EndpointHit().setApp("ewm-main-service").setUri(request.getRequestURI())
                 .setIp(request.getRemoteAddr()));
-        Event event = eventRepository.findByIdAndState(eventId, EventState.PUBLISHED)
-                .orElseThrow(() -> new NotFoundException(String.format("Событие с id %d не найдено.", eventId)));
-        return EventMapper.toEventFullDto(event,
-                requestService.countByEventIdAndStatus(event.getId(), RequestStatus.CONFIRMED),
-                (long) statsClient.findByStartAndEndAndUrisAndIsUniqueIp(event.getCreatedOn(), LocalDateTime.now(),
-                        List.of(request.getRequestURI()), true).size());
+        Event event = findByIdAndState(eventId, EventState.PUBLISHED);
+
+        long views = statsClient.findByStartAndEndAndUrisAndIsUniqueIp(event.getCreatedOn(), LocalDateTime.now(),
+                List.of(request.getRequestURI()), true).size();
+        return eventMapper.toEventFullDto(event, views);
     }
 
     @Transactional(readOnly = true)
@@ -304,6 +292,12 @@ public class EventServiceImpl implements EventService {
         if (eventIds == null)
             return Collections.emptyList();
         return eventRepository.findByIdIn(eventIds);
+    }
+
+    @Override
+    public Event findByIdAndState(Long eventId, EventState state) {
+        return eventRepository.findByIdAndState(eventId, state).orElseThrow(() ->
+                new NotFoundException(String.format("События со статусом %s и id %d не найдено", state, eventId)));
     }
 
     private Event checkEventWithInitiatorExists(Long eventId, Long userId) {

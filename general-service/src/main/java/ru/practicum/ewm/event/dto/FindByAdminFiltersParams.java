@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class FindAdminByFiltersParams {
+public class FindByAdminFiltersParams {
     private List<Long> users;
     private List<EventState> states;
     private List<Long> categories;

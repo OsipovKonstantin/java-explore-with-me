@@ -13,8 +13,8 @@ import ru.practicum.ewm.request.dto.ParticipationRequestDto;
 import ru.practicum.ewm.request.dto.RequestStatus;
 import ru.practicum.ewm.request.entity.ParticipationRequest;
 import ru.practicum.ewm.request.mapper.ParticipationRequestMapper;
+import ru.practicum.ewm.user.UserService;
 import ru.practicum.ewm.user.entity.User;
-import ru.practicum.ewm.user.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,6 +28,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
     private final ParticipationRequestRepository requestRepository;
     private final UserService userService;
     private final EventRepository eventRepository;
+    private final ParticipationRequestMapper participationRequestMapper;
 
     @Transactional(readOnly = true)
     @Override
@@ -39,7 +40,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
     @Override
     public List<ParticipationRequestDto> findByEventId(Long eventId) {
         return requestRepository.findByEventId(eventId).stream()
-                .map(ParticipationRequestMapper::toParticipationRequestDto).collect(Collectors.toList());
+                .map(participationRequestMapper::toParticipationRequestDto).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
@@ -58,7 +59,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
     public List<ParticipationRequestDto> findByRequesterId(Long userId) {
         userService.checkExists(userId);
         return requestRepository.findByRequesterId(userId).stream()
-                .map(ParticipationRequestMapper::toParticipationRequestDto).collect(Collectors.toList());
+                .map(participationRequestMapper::toParticipationRequestDto).collect(Collectors.toList());
     }
 
     @Override
@@ -75,12 +76,11 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
                 && event.getParticipantLimit() != 0)
             throw new ConflictException("Достигнут лимит заявок.");
 
-
         RequestStatus requestStatus = RequestStatus.PENDING;
         if (event.getRequestModeration().equals(false) || event.getParticipantLimit() == 0)
             requestStatus = RequestStatus.CONFIRMED;
 
-        return ParticipationRequestMapper.toParticipationRequestDto(requestRepository.save(
+        return participationRequestMapper.toParticipationRequestDto(requestRepository.save(
                 new ParticipationRequest()
                         .setRequester(requester)
                         .setEvent(event)
@@ -95,7 +95,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
         if (!Objects.equals(requester.getId(), participationRequest.getRequester().getId()))
             throw new ConflictException(String.format("Заявку на участие в событии с id %d может удалить " +
                     "только создатель заявки.", requestId));
-        return ParticipationRequestMapper.toParticipationRequestDto(requestRepository
+        return participationRequestMapper.toParticipationRequestDto(requestRepository
                 .save(participationRequest.setStatus(RequestStatus.CANCELED)));
     }
 

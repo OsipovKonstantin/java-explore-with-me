@@ -7,9 +7,7 @@ import ru.practicum.ewm.request.dto.EventRequestStatusUpdateResult;
 import ru.practicum.ewm.request.dto.ParticipationRequestDto;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 public interface EventService {
     List<EventShortDto> findByInitiatorId(Long userId, Integer from, Integer size);
@@ -18,6 +16,8 @@ public interface EventService {
 
     EventFullDto findByIdAndInitiatorId(Long userId, Long eventId);
 
+    Event findById(Long eventId);
+
     EventFullDto update(Long userId, Long eventId, UpdateEventUserRequest updateEventUserRequest);
 
     List<ParticipationRequestDto> findParticipationRequestsByEventId(Long userId, Long eventId);
@@ -25,15 +25,15 @@ public interface EventService {
     EventRequestStatusUpdateResult updateParticipationRequestsStatus(Long userId, Long eventId,
                                                                      EventRequestStatusUpdateRequest eventRequestStatusUpdateRequest);
 
-    List<EventFullDto> findAdminByFilters(FindAdminByFiltersParams params);
+    List<EventFullDto> findByAdminFilters(FindByAdminFiltersParams params);
 
     EventFullDto update(Long eventId, UpdateEventAdminRequest updateEventAdminRequest);
 
-    List<EventShortDto> findPublicByFilters(String text, Set<Long> categories, Boolean paid,
-                                            LocalDateTime rangeStart, LocalDateTime rangeEnd, Boolean onlyAvailable,
-                                            SortType sort, Integer from, Integer size, HttpServletRequest request);
+    List<EventShortDto> findByPublicFilters(FindByPublicFiltersParams params);
 
     EventFullDto findDtoById(Long eventId, HttpServletRequest request);
 
     List<Event> findByIdIn(List<Long> eventIds);
+
+    Event findByIdAndState(Long eventId, EventState state);
 }

@@ -13,9 +13,10 @@ import ru.practicum.ewm.location.mapper.LocationMapper;
 @Transactional(propagation = Propagation.REQUIRED)
 public class LocationServiceImpl implements LocationService {
     private final LocationRepository locationRepository;
+    private final LocationMapper locationMapper;
 
     @Override
     public Location save(LocationDto location) {
-        return locationRepository.save(LocationMapper.toLocation(location));
+        return locationRepository.save(locationMapper.toLocation(location));
     }
 }
