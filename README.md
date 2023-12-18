@@ -1,4 +1,4 @@
-![image](https://github.com/OsipovKonstantin/java-explore-with-me/assets/98541812/f57fcda2-23ce-4c70-9c97-348d22ffc02f)
+[![image](https://github.com/OsipovKonstantin/java-explore-with-me/assets/98541812/f57fcda2-23ce-4c70-9c97-348d22ffc02f)](https://www.midjourney.com)
 # Explore with me - сервис поиска компании для совместного времяпровождения
 [![Java](https://img.shields.io/badge/-Java%2011-F29111?style=for-the-badge&logo=java&logoColor=e38873)](https://www.oracle.com/java/)
 [![Spring](https://img.shields.io/badge/-Spring%202.7.5-6AAD3D?style=for-the-badge&logo=spring&logoColor=90fd87)](https://spring.io/projects/spring-framework) 
