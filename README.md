@@ -33,6 +33,7 @@ Explore with me дословно переводится как исследуй 
    ```
 git clone https://github.com/OsipovKonstantin/java-explore-with-me.git
    ```
+в командной строке перейдите в корень проекта. Затем:
    ```
 mvn clean package
    ```
