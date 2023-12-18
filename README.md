@@ -29,7 +29,7 @@ Explore with me дословно переводится как исследуй 
 ## Как запустить и использовать
 Для запуска необходимо, чтобы на ПК был установлен [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 - откройте командную строку cmd на ПК и выполните ряд команд
-- git clone https://github.com/OsipovKonstantin/java-explore-with-me.git
+- git clone <span>https://</span>github.com/OsipovKonstantin/java-explore-with-me.git
 - mvn clean package
 - docker-compose up
 - Приложение готово к использованию. Сервис статистики доступен по андресу [http://localhost:9090](http://localhost:9090), а основной сервис - [http://localhost:8080](http://localhost:8080)
