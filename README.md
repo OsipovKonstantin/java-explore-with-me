@@ -25,4 +25,4 @@ Explore with me дословно переводится как исследуй 
 Поведение приложения различается для администраторов (admin), незарегистрированных (public) и зарегистрированных (private) пользователей. Подробное описание эндпоинтов, классов и требований к ним приведены в спецификации Swagger для [сервиса статистики](https://app.swaggerhub.com/apis/KonstantinOsipov/stat-service_api/v0) и [основного сервиса](https://app.swaggerhub.com/apis/KonstantinOsipov/explore-with_me_api/1.0)
 ## Диаграмма базы данных
 ## Как использовать
-Пример использования приложения можно посмотреть в тестах Postman для [сервиса статистики](postman/stats-service.json) и [основного сервиса](postman/general-service.json)
+Со сценариями работы приложения можно ознакомиться, запустив коллекции Postman-тестов для [сервиса статистики](postman/stats-service.json) и [основного сервиса](postman/general-service.json)
