@@ -24,8 +24,8 @@ Explore with me дословно переводится как исследуй 
 Поведение приложения различается для администраторов (admin), незарегистрированных (public) и зарегистрированных (private) пользователей. Подробное описание эндпоинтов, классов и требований к ним приведены в спецификации Swagger:
 - [сервис статистики](https://app.swaggerhub.com/apis/KonstantinOsipov/stat-service_api/v0)
 - [основной сервис](https://app.swaggerhub.com/apis/KonstantinOsipov/explore-with_me_api/1.0)
-## Диаграмма базы данных
-- ![схема БД](schema/explore_with_me_Osipov_Konstantin.png)
+## Диаграммы базы данных для 2 микросервисов
+![схемы БД для 2 микросервисов](explore_with_me_Osipov_Konstantin.png)
 ## Как запустить и использовать
 Для запуска необходимо:
 - скачать репозиторий и разорхивировать
