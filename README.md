@@ -25,6 +25,7 @@ Explore with me дословно переводится как исследуй 
 - [сервис статистики](https://app.swaggerhub.com/apis/KonstantinOsipov/stat-service_api/v0)
 - [основной сервис](https://app.swaggerhub.com/apis/KonstantinOsipov/explore-with_me_api/1.0)
 ## Диаграмма базы данных
+- ![схема БД](schema/explore_with_me_Osipov_Konstantin.png)
 ## Как запустить и использовать
 Для запуска необходимо:
 - скачать репозиторий и разорхивировать
