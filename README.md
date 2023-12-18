@@ -28,7 +28,7 @@ Explore with me дословно переводится как исследуй 
 ![схемы БД для 2 микросервисов](ewm_schema_DB_.png)
 
 ## Как запустить и использовать
-Для запуска необходимо, чтобы на ПК был установлен [Docker Desktop](https://www.docker.com/products/docker-desktop/). Откройте командную строку cmd и выполните следующие команды
+Для запуска необходимо, чтобы на ПК была установлена и открыта программа [Docker Desktop](https://www.docker.com/products/docker-desktop/). После установки откройте командную строку cmd и выполните следующие команды
 
    ```
 git clone https://github.com/OsipovKonstantin/java-explore-with-me.git
