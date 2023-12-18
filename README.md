@@ -25,7 +25,8 @@ Explore with me дословно переводится как исследуй 
 - [сервис статистики](https://app.swaggerhub.com/apis/KonstantinOsipov/stat-service_api/v0)
 - [основной сервис](https://app.swaggerhub.com/apis/KonstantinOsipov/explore-with_me_api/1.0)
 ## Диаграммы базы данных для 2 микросервисов
-![схемы БД для 2 микросервисов](ewm_schema_DB.png)
+![схемы БД для 2 микросервисов](ewm_schema_DB_.png)
+
 ## Как запустить и использовать
 Для запуска необходимо, чтобы на ПК был установлен [Docker Desktop](https://www.docker.com/products/docker-desktop/). Откройте командную строку cmd и выполните следующие команды
 
