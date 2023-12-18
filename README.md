@@ -27,14 +27,12 @@ Explore with me дословно переводится как исследуй 
 ## Диаграммы базы данных для 2 микросервисов
 ![схемы БД для 2 микросервисов](ewm_schema_DB.png)
 ## Как запустить и использовать
-Для запуска необходимо:
-- скачать репозиторий и разорхивировать
-- В коммандной строке перейти в папку с репозиторием и выполнить ряд следующих команд
+Для запуска необходимо, чтобы на ПК был установлен [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+- откройте командную строку cmd на ПК и выполните ряд команд
+- git clone https://github.com/OsipovKonstantin/java-explore-with-me.git
 - mvn clean package
-- mvn install
-- docker-compose build
-- docker-compose up -d
-- сервис статистики доступен по андресу [http://localhost:9090](http://localhost:9090), а основной сервис - [http://localhost:8080](http://localhost:8080)
+- docker-compose up
+- Приложение готово к использованию. Сервис статистики доступен по андресу [http://localhost:9090](http://localhost:9090), а основной сервис - [http://localhost:8080](http://localhost:8080)
 
 Со сценариями работы приложения можно ознакомиться, запустив коллекции Postman-тестов:
 - [сервис статистики](postman/stats-service.json)
