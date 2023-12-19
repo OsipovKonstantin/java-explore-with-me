@@ -1,4 +1,5 @@
-![image](https://github.com/OsipovKonstantin/java-explore-with-me/assets/98541812/386e0d15-f04e-4148-87e3-aa250490104f)
+[![image](https://github.com/OsipovKonstantin/java-explore-with-me/assets/98541812/b745fac7-fe15-4944-9c79-f70db1122f3c)](https://www.independent.co.uk/travel/nature-hike-guide-tips-a9156331.html)
+
 # Explore with me - сервис поиска компании для совместного времяпровождения
 [![Java](https://img.shields.io/badge/-Java%2011-F29111?style=for-the-badge&logo=java&logoColor=e38873)](https://www.oracle.com/java/)
 [![Spring](https://img.shields.io/badge/-Spring%202.7.5-6AAD3D?style=for-the-badge&logo=spring&logoColor=90fd87)](https://spring.io/projects/spring-framework) 
