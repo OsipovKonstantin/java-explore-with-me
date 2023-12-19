@@ -1,4 +1,4 @@
-[![image](https://github.com/OsipovKonstantin/java-explore-with-me/assets/98541812/b745fac7-fe15-4944-9c79-f70db1122f3c)](https://www.independent.co.uk/travel/nature-hike-guide-tips-a9156331.html)
+[![image](https://github.com/OsipovKonstantin/java-explore-with-me/assets/98541812/eb3f70b5-4e96-48fc-9d94-ba012b24e763)](https://www.forbes.com/sites/carltonreid/2019/08/08/sidewalk-parked-vw-beetle-photobombed-fab-fours-abbey-road-shot-50-years-ago-today/?sh=7e0a7e355892)
 
 # Explore with me - сервис поиска компании для совместного времяпровождения
 [![Java](https://img.shields.io/badge/-Java%2011-F29111?style=for-the-badge&logo=java&logoColor=e38873)](https://www.oracle.com/java/)
