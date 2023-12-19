@@ -1,4 +1,5 @@
-[![image](https://github.com/OsipovKonstantin/java-explore-with-me/assets/98541812/eb3f70b5-4e96-48fc-9d94-ba012b24e763)](https://www.forbes.com/sites/carltonreid/2019/08/08/sidewalk-parked-vw-beetle-photobombed-fab-fours-abbey-road-shot-50-years-ago-today/?sh=7e0a7e355892)
+![image](https://github.com/OsipovKonstantin/java-explore-with-me/assets/98541812/ed49ca46-20ba-4a5e-b0e9-7122956c5af8)
+
 
 # Explore with me - сервис поиска компании для совместного времяпровождения
 [![Java](https://img.shields.io/badge/-Java%2011-F29111?style=for-the-badge&logo=java&logoColor=e38873)](https://www.oracle.com/java/)
