@@ -3,7 +3,7 @@
 
 # Explore with me - сервис поиска компании для совместного времяпровождения
 [![Java](https://img.shields.io/badge/-Java%2011-F29111?style=for-the-badge&logo=java&logoColor=e38873)](https://www.oracle.com/java/)
-[![Spring](https://img.shields.io/badge/-Spring%202.7.5-6AAD3D?style=for-the-badge&logo=spring&logoColor=90fd87)](https://spring.io/projects/spring-framework) 
+[![Spring](https://img.shields.io/badge/-Spring%20Boot%202.7.5-6AAD3D?style=for-the-badge&logo=spring&logoColor=90fd87)](https://spring.io/projects/spring-framework) 
 [![Postgresql 14](https://img.shields.io/badge/-postgresql%2014-31648C?style=for-the-badge&logo=postgresql&logoColor=FFFFFF)](https://www.postgresql.org/)
 [![Hibernate](https://img.shields.io/badge/-Hibernate%205.6-B6A975?style=for-the-badge&logo=hibernate&logoColor=717c88)](https://hibernate.org/)
 [![Maven](https://img.shields.io/badge/-Maven-7D2675?style=for-the-badge&logo=apache&logoColor=e38873)](https://maven.apache.org/)
