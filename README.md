@@ -47,3 +47,11 @@ docker-compose up
 Со сценариями работы приложения ознакомьтесь, посмотрев и запустив коллекции Postman-тестов:
 - [сервис статистики](postman/stats-service.json)
 - [основной сервис](postman/general-service.json)
+
+
+# Дальнейшие планы - frontend страницы
+## UI дизайн главной страницы сервиса
+![5](https://github.com/OsipovKonstantin/java-explore-with-me/assets/98541812/266bdbc4-af53-497f-ad20-1685c654c327)
+
+## Состояние кнопок обычное и hover (при наведении)
+![image](https://github.com/OsipovKonstantin/java-explore-with-me/assets/98541812/40e183f1-1618-4c03-bd27-206a5754c75b)
